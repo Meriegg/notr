@@ -1,4 +1,5 @@
 import Layout from "@/Components/Layout";
+import { ModalsProvider } from "@mantine/modals";
 import { MantineProvider } from "@mantine/core";
 import { SessionProvider } from "next-auth/react";
 import { type AppType } from "next/app";
@@ -21,9 +22,11 @@ const MyApp: AppType<{ session: Session | null }> = ({
           colorScheme: "dark",
         }}
       >
-        <Layout>
-          <Component {...pageProps} />
-        </Layout>
+        <ModalsProvider>
+          <Layout>
+            <Component {...pageProps} />
+          </Layout>
+        </ModalsProvider>
       </MantineProvider>
     </SessionProvider>
   );

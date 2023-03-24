@@ -10,12 +10,6 @@ datasource db {
     url      = env("DATABASE_URL")
 }
 
-model Example {
-    id        String   @id @default(cuid())
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
-}
-
 // Necessary for Next auth
 model Account {
     id                String  @id @default(cuid())
@@ -23,12 +17,12 @@ model Account {
     type              String
     provider          String
     providerAccountId String
-    refresh_token     String? // @db.Text
-    access_token      String? // @db.Text
+    refresh_token     String? @db.Text
+    access_token      String? @db.Text
     expires_at        Int?
     token_type        String?
     scope             String?
-    id_token          String? // @db.Text
+    id_token          String? @db.Text
     session_state     String?
     user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
 
@@ -44,13 +38,15 @@ model Session {
 }
 
 model User {
-    id            String    @id @default(cuid())
-    name          String?
-    email         String?   @unique
-    emailVerified DateTime?
-    image         String?
-    accounts      Account[]
-    sessions      Session[]
+    id                String    @id @default(cuid())
+    name              String?
+    email             String?   @unique
+    emailVerified     DateTime?
+    image             String?
+    didCompleteSignup Boolean   @default(false)
+    notes             Note[]    @relation("UserNotes")
+    accounts          Account[]
+    sessions          Session[]
 }
 
 model VerificationToken {
@@ -59,4 +55,26 @@ model VerificationToken {
     expires    DateTime
 
     @@unique([identifier, token])
+}
+
+enum TypeOfNote {
+    code
+    username
+    password
+    fullAccount
+    linkSource
+    general
+}
+
+model Note {
+    id                String     @id @default(cuid())
+    title             String?
+    content           String
+    tags              String[]
+    typeOfNote        TypeOfNote @default(general)
+    requiresAttention Boolean    @default(false)
+    createdOn         DateTime   @default(now())
+    updatedOn         DateTime?
+    userId            String
+    user              User       @relation(fields: [userId], references: [id], name: "UserNotes")
 }
