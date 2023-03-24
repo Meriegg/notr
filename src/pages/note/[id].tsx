@@ -25,10 +25,12 @@ import { NoteTypeSchema } from "@/constants/zodSchemas";
 import { api } from "@/utils/api";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit, faPlus, faXmark } from "@fortawesome/free-solid-svg-icons";
+import { useSession } from "next-auth/react";
 
-const Note: NextPage<
-  InferGetServerSidePropsType<typeof getServerSideProps>
-> = ({ note }) => {
+const Note: NextPage<InferGetServerSidePropsType<typeof getServerSideProps>> = ({ note }) => {
+  useSession({
+    required: true,
+  });
   const router = useRouter();
   const [isEditing, setEditing] = useState(false);
   const editNote = api.notes.updateNote.useMutation({
@@ -46,17 +48,18 @@ const Note: NextPage<
     requiresAttention: z.boolean(),
   });
 
-  const { onSubmit, getInputProps, values, errors, setFieldValue, ...form } =
-    useForm<z.infer<typeof validationSchema>>({
-      validate: zodResolver(validationSchema),
-      initialValues: {
-        title: note?.title || "",
-        content: note?.content || "",
-        tags: note?.tags || ([] as string[]),
-        typeOfNote: note?.typeOfNote || "general",
-        requiresAttention: note?.requiresAttention || false,
-      },
-    });
+  const { onSubmit, getInputProps, values, errors, setFieldValue, ...form } = useForm<
+    z.infer<typeof validationSchema>
+  >({
+    validate: zodResolver(validationSchema),
+    initialValues: {
+      title: note?.title || "",
+      content: note?.content || "",
+      tags: note?.tags || ([] as string[]),
+      typeOfNote: note?.typeOfNote || "general",
+      requiresAttention: note?.requiresAttention || false,
+    },
+  });
   useEffect(() => {
     const isEditing = router.query.edit;
     setEditing(isEditing === "true" ? true : false);
@@ -69,17 +72,10 @@ const Note: NextPage<
   return (
     <Flex mt="lg" direction="column" gap="sm">
       <Flex align="center" gap="0.5rem">
-        <Text
-          style={{ transition: "all .3s ease" }}
-          size={isEditing ? "xl" : "2rem"}
-          weight="600"
-        >
+        <Text style={{ transition: "all .3s ease" }} size={isEditing ? "xl" : "2rem"} weight="600">
           {note.title || "Untitled"}
         </Text>
-        <Text
-          size={isEditing ? "1rem" : "0px"}
-          style={{ transition: "all .3s ease" }}
-        >
+        <Text size={isEditing ? "1rem" : "0px"} style={{ transition: "all .3s ease" }}>
           Edit
         </Text>
       </Flex>
@@ -176,10 +172,7 @@ const Note: NextPage<
                   multiple={false}
                   value={values.typeOfNote}
                   onChange={(value) =>
-                    setFieldValue(
-                      "typeOfNote",
-                      value as z.infer<typeof NoteTypeSchema>
-                    )
+                    setFieldValue("typeOfNote", value as z.infer<typeof NoteTypeSchema>)
                   }
                 >
                   <Flex justify="evenly" wrap="wrap" gap="sm">
@@ -209,10 +202,7 @@ const Note: NextPage<
                 <SegmentedControl
                   value={values.requiresAttention ? "y" : "n"}
                   onChange={(val) => {
-                    setFieldValue(
-                      "requiresAttention",
-                      val === "n" ? false : true
-                    );
+                    setFieldValue("requiresAttention", val === "n" ? false : true);
                   }}
                   data={[
                     { label: "Nope", value: "n" },

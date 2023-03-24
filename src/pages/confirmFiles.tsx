@@ -1,20 +1,19 @@
 import { useImportedFiles } from "@/lib/zustand/useImportedFiles";
-import {
-  faEye,
-  faFileImport,
-  faTrash,
-} from "@fortawesome/free-solid-svg-icons";
+import { faEye, faFileImport, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Box, Flex, Text, Button } from "@mantine/core";
 import { modals } from "@mantine/modals";
 import { useRouter } from "next/router";
 import { api } from "@/utils/api";
+import { useSession } from "next-auth/react";
 import type { NextPage } from "next";
 
 const ConfirmFiles: NextPage = () => {
-  const { activeFiles, removeFile, clearFiles } = useImportedFiles(
-    (state) => state
-  );
+  useSession({
+    required: true,
+  });
+
+  const { activeFiles, removeFile, clearFiles } = useImportedFiles((state) => state);
   const router = useRouter();
   const importFiles = api.notes.importFiles.useMutation({
     onSuccess: () => {
@@ -38,9 +37,7 @@ const ConfirmFiles: NextPage = () => {
       <h1>Are you sure you want to import these files?</h1>
 
       <Flex direction="column" gap="sm">
-        {!activeFiles.length && (
-          <Text>Choose at least 1 file to continue!</Text>
-        )}
+        {!activeFiles.length && <Text>Choose at least 1 file to continue!</Text>}
         {activeFiles.map((file, idx) => (
           <Flex
             key={idx}

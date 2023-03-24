@@ -19,6 +19,7 @@ import {
   Badge,
 } from "@mantine/core";
 import Link from "next/link";
+import { modals } from "@mantine/modals";
 import { UserButton } from "./UserInfo";
 import { useEffect, useState } from "react";
 import { useDebouncedValue, useMediaQuery } from "@mantine/hooks";
@@ -129,6 +130,23 @@ export function Sidebar() {
     </UnstyledButton>
   ));
 
+  const openAccountActionsModal = () =>
+    modals.open({
+      title: "Account",
+      children: (
+        <Box>
+          <Button
+            color="dark"
+            rightIcon={<>{!isOpen ? null : <FontAwesomeIcon icon={faSignOut} />}</>}
+            onClick={() => signOut()}
+            fullWidth
+          >
+            {isOpen ? "Log out" : <FontAwesomeIcon icon={faSignOut} />}
+          </Button>
+        </Box>
+      ),
+    });
+
   useEffect(() => {
     setOpen(!isTablet);
   }, [!isTablet]);
@@ -166,6 +184,7 @@ export function Sidebar() {
                   name={data.user.name || ""}
                   email={data.user.email || ""}
                   hideData={!isOpen}
+                  onClick={() => openAccountActionsModal()}
                 />
                 <Button
                   onClick={() => setOpen(!isOpen)}
@@ -252,18 +271,6 @@ export function Sidebar() {
             </Navbar.Section>
           )}
         </Box>
-        {status === "authenticated" && !debouncedQuery && (
-          <Navbar.Section pos="sticky" left="20px" bottom="85vh" h="100%">
-            <Button
-              color="dark"
-              rightIcon={<>{!isOpen ? null : <FontAwesomeIcon icon={faSignOut} />}</>}
-              onClick={() => signOut()}
-              fullWidth
-            >
-              {isOpen ? "Log out" : <FontAwesomeIcon icon={faSignOut} />}
-            </Button>
-          </Navbar.Section>
-        )}
       </Navbar>
       {isMobile && (
         <Button

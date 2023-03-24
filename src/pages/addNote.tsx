@@ -17,8 +17,13 @@ import {
 } from "@mantine/core";
 import type { NextPage } from "next";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useSession } from "next-auth/react";
 
 const AddNote: NextPage = () => {
+  useSession({
+    required: true,
+  });
+
   const router = useRouter();
   const createNote = api.notes.createNote.useMutation({
     onSuccess: () => {
@@ -117,10 +122,7 @@ const AddNote: NextPage = () => {
                 multiple={false}
                 value={values.typeOfNote}
                 onChange={(value) =>
-                  setFieldValue(
-                    "typeOfNote",
-                    value as z.infer<typeof NoteTypeSchema>
-                  )
+                  setFieldValue("typeOfNote", value as z.infer<typeof NoteTypeSchema>)
                 }
               >
                 <Flex justify="evenly" wrap="wrap" gap="sm">
@@ -150,10 +152,7 @@ const AddNote: NextPage = () => {
               <SegmentedControl
                 value={values.requiresAttention ? "y" : "n"}
                 onChange={(val) => {
-                  setFieldValue(
-                    "requiresAttention",
-                    val === "n" ? false : true
-                  );
+                  setFieldValue("requiresAttention", val === "n" ? false : true);
                 }}
                 data={[
                   { label: "Nope", value: "n" },

@@ -16,10 +16,7 @@ const useStyles = createStyles((theme) => ({
     color: theme.colorScheme === "dark" ? theme.colors.dark[0] : theme.black,
 
     "&:hover": {
-      backgroundColor:
-        theme.colorScheme === "dark"
-          ? theme.colors.dark[8]
-          : theme.colors.gray[0],
+      backgroundColor: theme.colorScheme === "dark" ? theme.colors.dark[8] : theme.colors.gray[0],
     },
   },
 }));
@@ -29,19 +26,14 @@ interface UserButtonProps extends UnstyledButtonProps {
   name: string;
   email: string;
   hideData?: boolean;
+  onClick?: () => void;
 }
 
-export function UserButton({
-  image,
-  name,
-  email,
-  hideData,
-  ...others
-}: UserButtonProps) {
+export function UserButton({ image, onClick, name, email, hideData, ...others }: UserButtonProps) {
   const { classes } = useStyles();
 
   return (
-    <UnstyledButton className={classes.user} {...others}>
+    <UnstyledButton className={classes.user} onClick={onClick} {...others}>
       <Group>
         <Avatar src={image} radius="xl" />
 
