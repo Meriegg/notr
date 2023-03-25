@@ -211,7 +211,11 @@ export function Sidebar() {
           {query ? (
             <Navbar.Section className={classes.section} mt="md">
               <div className={classes.mainLinks}>
-                <Divider label="Search results" labelPosition="center" />
+                <Divider
+                  label="Search results"
+                  my="0.125rem"
+                  labelPosition="center"
+                />
                 <Flex align="center" justify="space-between" w="100%" mb="lg">
                   <Text size="sm" mt="0.125rem">
                     query: {query}
@@ -275,7 +279,11 @@ export function Sidebar() {
 
                 {tagResults && tags.length && (
                   <>
-                    <Divider label="Search by tags" labelPosition="center" />
+                    <Divider
+                      label="Search by tags"
+                      my="sm"
+                      labelPosition="center"
+                    />
 
                     {tagResults.map((result, idx) => (
                       <UnstyledButton

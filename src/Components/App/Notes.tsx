@@ -28,7 +28,6 @@ const Notes = () => {
 
   return (
     <Box>
-      <pre>{JSON.stringify(tagResults, null, 2)}</pre>
       {!data?.length && (
         <Text
           display="flex"
