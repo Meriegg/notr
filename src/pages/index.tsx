@@ -3,10 +3,14 @@ import Link from "next/link";
 import ImportFiles from "@/Components/App/ImportFilesModal";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Button, Flex, Group, Text, rem } from "@mantine/core";
+import { Button, Flex } from "@mantine/core";
 import { Divider } from "@mantine/core";
 import { verifyAuthState } from "@/server/utils/verifyAuthState";
-import type { GetServerSideProps, GetServerSidePropsContext, NextPage } from "next";
+import type {
+  GetServerSideProps,
+  GetServerSidePropsContext,
+  NextPage,
+} from "next";
 
 const Home: NextPage = () => {
   return (
@@ -31,7 +35,8 @@ const Home: NextPage = () => {
   );
 };
 
-export const getServerSideProps: GetServerSideProps = async (ctx: GetServerSidePropsContext) =>
-  await verifyAuthState(ctx);
+export const getServerSideProps: GetServerSideProps = async (
+  ctx: GetServerSidePropsContext
+) => await verifyAuthState(ctx);
 
 export default Home;

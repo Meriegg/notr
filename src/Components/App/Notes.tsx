@@ -6,7 +6,7 @@ import { useSearch } from "@/lib/zustand/useSearch";
 
 const Notes = () => {
   const { status, data } = api.notes.getNotes.useQuery();
-  const { results, loading, error, query } = useSearch();
+  const { results, loading, error, query, tagResults } = useSearch();
 
   if (status === "loading") {
     return (
@@ -28,6 +28,7 @@ const Notes = () => {
 
   return (
     <Box>
+      <pre>{JSON.stringify(tagResults, null, 2)}</pre>
       {!data?.length && (
         <Text
           display="flex"
@@ -42,7 +43,6 @@ const Notes = () => {
           You don't have any notes yet!
         </Text>
       )}
-
       {results && query ? (
         <div>
           {loading && <Text>Loading results</Text>}
