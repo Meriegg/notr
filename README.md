@@ -1,6 +1,6 @@
 # Why?
 
-I made this project to help me manage text files on my computer. I am planning to make a chrome extension allowing you to connect your browser to notr so that if you have any saved passwords in notr you can search for it in the top right corner of your browser and autofill anything.
+I made this project to help me manage text files on my computer. I am planning to make a chrome extension allowing you to connect your browser to notr so that if you have any saved passwords in notr you can search for them in the top right corner of your browser and autofill anything.
 
 # How can you use it?
 
