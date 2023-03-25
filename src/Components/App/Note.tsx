@@ -1,13 +1,7 @@
 import Link from "next/link";
 import { api } from "@/utils/api";
 import { IconAdjustmentsHorizontal } from "@tabler/icons-react";
-import {
-  faDownload,
-  faEdit,
-  faEye,
-  faListDots,
-  faTrash,
-} from "@fortawesome/free-solid-svg-icons";
+import { faDownload, faEdit, faEye, faListDots, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Badge, Card, Text, Flex, Button, Menu, Box } from "@mantine/core";
 import { modals } from "@mantine/modals";
@@ -27,9 +21,7 @@ const Note = ({ note }: Props) => {
   const openConfirmModal = () =>
     modals.openConfirmModal({
       title: "Are you sure you want to delete this note?",
-      children: (
-        <Text size="sm">Please click one of these buttons to proceed.</Text>
-      ),
+      children: <Text size="sm">Please click one of these buttons to proceed.</Text>,
       labels: { confirm: "Confirm", cancel: "Cancel" },
       onCancel: () => console.log("Cancel"),
       onConfirm: () => deleteNote.mutate({ noteId: note.id }),
@@ -128,8 +120,8 @@ const Note = ({ note }: Props) => {
                 flexWrap: "wrap",
               }}
             >
-              {note.tags.map((tag) => (
-                <Badge color="pink" size="sm">
+              {note.tags.map((tag, idx) => (
+                <Badge color="pink" size="sm" key={idx}>
                   #{tag}
                 </Badge>
               ))}

@@ -144,8 +144,8 @@ const SearchNote = ({ note, titleMatches, contentMatches, matchCount }: Props) =
                 flexWrap: "wrap",
               }}
             >
-              {note.tags.map((tag) => (
-                <Badge color="pink" size="sm">
+              {note.tags.map((tag, idx) => (
+                <Badge color="pink" size="sm" key={idx}>
                   #{tag}
                 </Badge>
               ))}

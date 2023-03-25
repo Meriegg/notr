@@ -39,7 +39,7 @@ const Notes = () => {
             gap: "0.5rem",
           }}
         >
-          You don't have any notes yet!
+          You do not have any notes yet!
         </Text>
       )}
       {results && query ? (
