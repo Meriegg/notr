@@ -1,18 +1,14 @@
-import Notes from "@/Components/App/Notes";
+import Notes from "@/components/app/Notes";
 import Link from "next/link";
-import ImportFiles from "@/Components/App/ImportFilesModal";
-import TagSearchNotes from "@/Components/App/TagSearchNotes";
+import ImportFiles from "@/components/app/ImportFilesModal";
+import TagSearchNotes from "@/components/app/TagSearchNotes";
 import { useSearch } from "@/lib/zustand/useSearch";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Button, Flex } from "@mantine/core";
 import { Divider, Tabs } from "@mantine/core";
 import { verifyAuthState } from "@/server/utils/verifyAuthState";
-import type {
-  GetServerSideProps,
-  GetServerSidePropsContext,
-  NextPage,
-} from "next";
+import type { GetServerSideProps, GetServerSidePropsContext, NextPage } from "next";
 
 const Home: NextPage = () => {
   const { tagResults } = useSearch();
@@ -54,8 +50,7 @@ const Home: NextPage = () => {
   );
 };
 
-export const getServerSideProps: GetServerSideProps = async (
-  ctx: GetServerSidePropsContext
-) => await verifyAuthState(ctx);
+export const getServerSideProps: GetServerSideProps = async (ctx: GetServerSidePropsContext) =>
+  await verifyAuthState(ctx);
 
 export default Home;

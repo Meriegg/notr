@@ -1,4 +1,4 @@
-import Layout from "@/Components/Layout";
+import Layout from "@/components/Layout";
 import { ModalsProvider } from "@mantine/modals";
 import { MantineProvider } from "@mantine/core";
 import { SessionProvider } from "next-auth/react";
