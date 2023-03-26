@@ -112,10 +112,10 @@ const SearchNote = ({ note, titleMatches, contentMatches, matchCount }: Props) =
 
           <Menu.Divider />
 
-          <Menu.Label>Other</Menu.Label>
+          {/* <Menu.Label>Other</Menu.Label>
           <Menu.Item rightSection={<FontAwesomeIcon icon={faDownload} />}>
             Export as text file
-          </Menu.Item>
+          </Menu.Item> */}
         </Menu.Dropdown>
       </Menu>
       <Card
