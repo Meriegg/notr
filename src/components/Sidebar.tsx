@@ -1,8 +1,13 @@
 import SearchInput from "./app/SearchInput";
 import Link from "next/link";
 import { signOut, useSession } from "next-auth/react";
-import { IconChevronsRight, IconChevronsLeft, IconMenu } from "@tabler/icons-react";
-import { faHome, faSignIn, faSignOut } from "@fortawesome/free-solid-svg-icons";
+import {
+  IconChevronsRight,
+  IconChevronsLeft,
+  IconMenu,
+  IconCloudDataConnection,
+} from "@tabler/icons-react";
+import { faHome, faSignIn, faSignOut, faCloud } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   createStyles,
@@ -80,7 +85,14 @@ const useStyles = createStyles((theme) => ({
   },
 }));
 
-const links = [{ icon: faHome, label: "Home", href: "/" }];
+const links = [
+  { icon: faHome, label: "Home", href: "/" },
+  {
+    icon: faCloud,
+    label: "Connected extensions",
+    href: "/extensions",
+  },
+];
 
 export function Sidebar() {
   const isTablet = useMediaQuery("(max-width: 726px)", true);

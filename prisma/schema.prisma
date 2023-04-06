@@ -2,8 +2,8 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 datasource db {
-    provider     = "postgresql"
-    url          = env("DATABASE_URL")
+    provider = "postgresql"
+    url      = env("DATABASE_URL")
 }
 
 generator client {
@@ -38,15 +38,17 @@ model Session {
 }
 
 model User {
-    id                String    @id @default(cuid())
-    name              String?
-    email             String?   @unique
-    emailVerified     DateTime?
-    image             String?
-    didCompleteSignup Boolean   @default(false)
-    notes             Note[]    @relation("UserNotes")
-    accounts          Account[]
-    sessions          Session[]
+    id                       String                 @id @default(cuid())
+    name                     String?
+    email                    String?                @unique
+    emailVerified            DateTime?
+    image                    String?
+    didCompleteSignup        Boolean                @default(false)
+    notes                    Note[]                 @relation("UserNotes")
+    connectedExtensions      ConnectedExtension[]   @relation("ConnectedExtensions")
+    accounts                 Account[]
+    sessions                 Session[]
+    extensionConnectionCodes ExtensionConnectCode[] @relation("ExtensionConnectionCodes")
 }
 
 model VerificationToken {
@@ -77,4 +79,25 @@ model Note {
     updatedOn         DateTime?
     userId            String
     user              User       @relation(fields: [userId], references: [id], name: "UserNotes")
+}
+
+model ConnectedExtension {
+    id                    String @id @default(cuid())
+    userId                String @unique
+    user                  User   @relation(fields: [userId], references: [id], name: "ConnectedExtensions")
+    sessionId             String @unique
+    publicVerificationKey String
+
+    @@map("connectedExtension")
+}
+
+model ExtensionConnectCode {
+    id      String   @id @default(cuid())
+    code    String
+    expires DateTime
+    isUsed  Boolean  @default(false)
+    userId  String
+    user    User     @relation(fields: [userId], references: [id], name: "ExtensionConnectionCodes")
+
+    @@map("extensionConnectCode")
 }
